@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SalesWeb.Data;
+using SalesWeb.Services;
 var builder = WebApplication.CreateBuilder(args);
 var connectionStr = "server=localhost;userid=developer;password=admin;database=saleswebdb";
 
@@ -8,8 +9,10 @@ builder.Services.AddDbContext<SalesWebContext>(options =>
 //options.UseSqlServer(builder.Configuration.GetConnectionString("SalesWebContext") ?? throw new InvalidOperationException("Connection string 'SalesWebContext' not found.")));
 
 // Add services to the container.
+// Injecao de Dependencia
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<SeedingService>();
+builder.Services.AddScoped<SellerService>();
 
 var app = builder.Build();
 
