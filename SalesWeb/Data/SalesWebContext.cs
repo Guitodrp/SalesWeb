@@ -8,6 +8,7 @@ namespace SalesWeb.Data
         public SalesWebContext(DbContextOptions<SalesWebContext> options)
             : base(options)
         {
+
         }
 
         public DbSet<Department> Department { get; set; } = default!;
