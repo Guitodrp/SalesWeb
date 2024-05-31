@@ -22,5 +22,16 @@ namespace SalesWeb.Services
             _context.SaveChanges();//Confirmar a adição
         }
 
+        public Seller FindById(int id)
+        {
+            return _context.Seller.FirstOrDefault(f => f.Id == id);
+        }
+
+        public void Remove(int id)
+        {
+            var remove = _context.Seller.Find(id);
+            _context.Seller.Remove(remove);
+            _context.SaveChanges();
+        }
     }
 }
