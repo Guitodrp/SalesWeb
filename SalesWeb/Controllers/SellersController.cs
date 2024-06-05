@@ -30,6 +30,20 @@ namespace SalesWeb.Controllers
             return View(viewModel);
         }
 
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var x = _sellerService.FindById(id.Value);
+            if (x == null)
+            {
+                return NotFound();
+            }
+            return View(x);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller)
