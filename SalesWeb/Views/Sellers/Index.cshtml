@@ -11,21 +11,24 @@
 </p>
 
 <table class="table table-striped table-hover table-bordered" >
-    <thead>
-        <tr class="table-info justify-content-center" >
-            <th>
+    <thead class="align-content-center">
+        <tr align="center" >
+            <th align="center">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
+            <th align="center">
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
+            <th align="center">
                 @Html.DisplayNameFor(model => model.BirthDate)
             </th>
-            <th>
+            <th align="center">
                 @Html.DisplayNameFor(model => model.BaseSalary)
             </th>
-            <th>Options</th>
+            <th align="center">
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th align="center">Options</th>
         </tr>
     </thead>
 
@@ -33,19 +36,22 @@
         @foreach (var item in Model)
         {
         <tr class="justify-content-center align-content-center">
-            <td>
+            <td align="center">
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
+            <td align="center">
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td>
+            <td align="center">
                 @Html.DisplayFor(modelItem => item.BirthDate)
             </td>
-            <td>
+                <td align="center">
                 @Html.DisplayFor(modelItem => item.BaseSalary)
             </td>
-            <td>
+            <td align="center">
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+            <td align="center">
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>

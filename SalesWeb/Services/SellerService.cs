@@ -44,7 +44,7 @@ namespace SalesWeb.Services
                 _context.Update(obj);
                 _context.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException e)
+            catch (DbUpdateConcurrencyException e) //Pegando a excessão padrão e trocando pra excessão criada na apk
             {
                 throw new DbConcurrencyException(e.Message);
             }

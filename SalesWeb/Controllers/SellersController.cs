@@ -2,6 +2,7 @@
 using SalesWeb.Models;
 using SalesWeb.Models.ViewModels;
 using SalesWeb.Services;
+using SalesWeb.Services.Exceptions;
 
 namespace SalesWeb.Controllers
 {
@@ -20,6 +21,7 @@ namespace SalesWeb.Controllers
         public IActionResult Index()
         {
             var list = _sellerService.FindAll();
+
             return View(list);
         }
 
@@ -30,6 +32,14 @@ namespace SalesWeb.Controllers
             return View(viewModel);
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Seller seller)
+        {
+            _sellerService.Insert(seller);
+            return RedirectToAction(nameof(Index));
+        }
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -44,12 +54,47 @@ namespace SalesWeb.Controllers
             return View(x);
         }
 
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var obj = _sellerService.FindById(id.Value);
+            if (obj == null)
+                return NotFound();
+
+            List<Department> departments = _departmentService.FindAll();
+
+            SellerFormViewModel viewModel = new SellerFormViewModel
+            {
+                Seller = obj,
+                Departments = departments
+            };
+
+            return View(viewModel);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Seller seller)
+        public IActionResult Edit(Seller seller, int id)
         {
-            _sellerService.Insert(seller);
-            return RedirectToAction(nameof(Index));
+            if (id != seller.Id)
+                return BadRequest();
+
+            try
+            {
+                _sellerService.Update(seller);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DbConcurrencyException)
+            {
+                return BadRequest();
+            }
+
         }
 
         public IActionResult Delete(int? id)
