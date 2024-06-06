@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using SalesWeb.Data;
 using SalesWeb.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionStr = "server=localhost;userid=developer;password=admin;database=saleswebdb";
 
@@ -27,6 +29,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+var enUS = new CultureInfo("en-US");
+
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(enUS),
+    SupportedCultures = new List<CultureInfo> { enUS },
+    SupportedUICultures = new List<CultureInfo> { enUS }
+};
+
+app.UseRequestLocalization(localizationOptions);
 
 app.UseHttpsRedirection();
 
