@@ -16,7 +16,8 @@ namespace SalesWeb.Services
 
         public async Task<List<Seller>> FindAllAsync()
         {
-            return await _context.Seller.ToListAsync();
+            return await _context.Seller.Include(i => i.Department)
+                .ToListAsync();
         }
         public async Task InsertAsync(Seller seller)
         {
